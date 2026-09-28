@@ -1085,7 +1085,7 @@ pnpm docker:down
 | 语言 | UTS | — | uni-app Type Script，编译为原生 Kotlin / Swift |
 | 前端框架 | Vue 3 | ^3.5.13 | Composition API |
 | 构建工具 | Vite | 5.2.8 | 极速开发体验 |
-| CSS 引擎 | Tailwind CSS | ^4.3.3 | v4 + weapp-tailwindcss 5.5.2，方括号任意值语法 |
+| CSS 引擎 | Tailwind CSS | ^4.3.3 | v4 + weapp-tailwindcss 5.5.11，方括号任意值语法 |
 | UI 组件库 | uview-ultra | 内置定制版 | uni-app X 专用 UI 库（深度修复版，兼容 VDOM/Vapor） |
 | 分页组件 | z-paging-x | 内置定制版 | 强大的下拉刷新 + 分页加载 |
 | 状态管理 | Pinia / x-pinia-s | ^3.0.4 / — | Vapor・Web・小程序走官方 Pinia；App VDOM 走 x-pinia-s |
@@ -1094,6 +1094,12 @@ pnpm docker:down
 | 图表 | e-chart | — | ECharts for uni-app X |
 | 图标 | uni-icons + lime-icon | — | 双图标方案 |
 | 文档站 | VitePress | ^1.6.4 | `docs/` 目录 |
+
+### Tailwind 构建与热更新
+
+样式生成统一使用 `weapp-tailwindcss/vite` 的 `WeappTailwindcss(uniAppX(...))`，主入口通过 `cssEntries` 指向 `main.css`。微信端不从 `App.uvue` 重复导入主入口；组件局部样式与开发态来源追踪沿用当前配置。
+
+`weapp-tailwindcss 5.5.11` 已修复微信 watch 增量构建中的 WXSS 自引用问题。热更新由插件管理，不再保留触碰 `main.css` 时间戳的自定义 HMR 补丁，也无需安装或注册 `@tailwindcss/postcss` / `@tailwindcss/vite`。
 
 ## ⚠️ UTS 开发注意事项
 
